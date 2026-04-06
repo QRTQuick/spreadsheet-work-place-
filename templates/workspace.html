@@ -1,16 +1,21 @@
 {% extends "base.html" %}
 
 {% block body %}
-<main class="workspace-shell">
-    <header class="workspace-header">
+<main class="workspace-shell workspace-app">
+    <header class="workspace-header workspace-app-header">
         <div class="workspace-breadcrumbs">
             <a class="brand" href="{{ url_for('dashboard_page') }}">
                 <span class="brand-mark">ЭТ</span>
                 <span class="brand-copy">
                     <strong>{{ app_name }}</strong>
-                    <small>{{ workspace_bootstrap.workspace.name }}</small>
+                    <small>Workbook editor</small>
                 </span>
             </a>
+            <div class="workspace-titlebar">
+                <span class="mini-pill">Private workbook</span>
+                <strong>{{ workspace_bootstrap.workspace.name }}</strong>
+                <small>{{ workspace_bootstrap.workspace.description or "Focused spreadsheet workspace" }}</small>
+            </div>
         </div>
         <div class="workspace-actions">
             <label class="button button-secondary file-button">
@@ -22,82 +27,72 @@
         </div>
     </header>
 
-    <section class="workspace-main">
-        <aside class="workspace-sidebar panel-card" data-reveal>
-            <p class="eyebrow">Workspace details</p>
-            <h1>{{ workspace_bootstrap.workspace.name }}</h1>
-            <p>{{ workspace_bootstrap.workspace.description or "This workspace is ready for importing and editing spreadsheet data." }}</p>
-            <div class="workspace-stat-stack">
+    <section class="workspace-studio panel-card" data-reveal>
+        {% if workspace_bootstrap.just_created %}
+        <section class="workspace-guide" data-onboarding-panel>
+            <div class="workspace-guide-copy">
+                <p class="eyebrow">Workspace ready</p>
+                <h2>{{ workspace_bootstrap.workspace.name }} is ready to edit.</h2>
+                <p>Start in <code>A1</code>, use the formula bar for quick edits, and import a CSV any time you want to bring in an existing sheet.</p>
+            </div>
+            <div class="workspace-guide-steps">
                 <article>
-                    <strong data-sheet-filled>0</strong>
-                    <span>Filled cells</span>
+                    <strong>Click and type</strong>
+                    <p>Choose any cell and begin entering your sheet data right away.</p>
                 </article>
                 <article>
-                    <strong data-sheet-numeric>0</strong>
-                    <span>Numeric cells</span>
+                    <strong>Import fast</strong>
+                    <p>Use <code>Import CSV</code> to fill the grid from an existing spreadsheet.</p>
                 </article>
                 <article>
-                    <strong data-sheet-sum>0</strong>
-                    <span>Numeric sum</span>
+                    <strong>Export anytime</strong>
+                    <p>Use <code>Download CSV</code> whenever you need a fresh copy.</p>
                 </article>
             </div>
-            <div class="workspace-note">
-                <strong>Engine status</strong>
-                <p data-engine-mode>Loading browser sheet tools…</p>
+            <div class="workspace-guide-actions">
+                <button class="button button-primary slim" type="button" data-guide-start>Start Editing</button>
+                <button class="button button-secondary slim" type="button" data-guide-dismiss>Dismiss Guide</button>
             </div>
-            <div class="workspace-note">
-                <strong>Creative system</strong>
-                <p data-visual-mode-label>Neon Studio mode with live graphics.</p>
-            </div>
-        </aside>
+        </section>
+        {% endif %}
 
-        <section class="workspace-editor panel-card" data-reveal>
-            {% if workspace_bootstrap.just_created %}
-            <section class="workspace-guide" data-onboarding-panel>
-                <div class="workspace-guide-copy">
-                    <p class="eyebrow">Workspace ready</p>
-                    <h2>Your workspace has been created. Start here.</h2>
-                    <p>
-                        Use these first steps to begin quickly: click a cell, type your data, import a CSV if you already have a sheet,
-                        then export when you are ready to download it.
-                    </p>
-                </div>
-                <div class="workspace-guide-steps">
-                    <article>
-                        <strong>1. Click cell A1</strong>
-                        <p>Start typing directly into the grid or use the formula bar at the top.</p>
-                    </article>
-                    <article>
-                        <strong>2. Import existing data</strong>
-                        <p>Use the <code>Import CSV</code> button if you already have spreadsheet data.</p>
-                    </article>
-                    <article>
-                        <strong>3. Grow the sheet</strong>
-                        <p>Add more rows and columns with the quick controls above the editor.</p>
-                    </article>
-                    <article>
-                        <strong>4. Download anytime</strong>
-                        <p>Use <code>Download CSV</code> whenever you want an exported copy of the workspace.</p>
-                    </article>
-                </div>
-                <div class="workspace-guide-actions">
-                    <button class="button button-primary slim" type="button" data-guide-start>Start Editing</button>
-                    <button class="button button-secondary slim" type="button" data-guide-dismiss>Dismiss Guide</button>
-                </div>
-            </section>
-            {% endif %}
-            <div class="editor-ribbon">
+        <div class="studio-heading">
+            <div>
+                <p class="eyebrow">Single-page spreadsheet editor</p>
+                <h1>{{ workspace_bootstrap.workspace.name }}</h1>
+            </div>
+            <div class="studio-heading-pills">
+                <span class="mini-pill">Autosave</span>
+                <span class="mini-pill">CSV import/export</span>
+                <span class="mini-pill">Only visible to you</span>
+            </div>
+        </div>
+
+        <nav class="ribbon-tabs" aria-label="Spreadsheet ribbon">
+            <span class="ribbon-tab is-active">Home</span>
+            <span class="ribbon-tab">Insert</span>
+            <span class="ribbon-tab">Data</span>
+            <span class="ribbon-tab">Review</span>
+            <span class="ribbon-tab">View</span>
+        </nav>
+
+        <div class="editor-ribbon spreadsheet-ribbon">
+            <div class="ribbon-group">
+                <span class="ribbon-label">Tools</span>
                 <div class="editor-mode-group">
                     <button class="tool-pill is-active" type="button" data-tool="select">Select</button>
-                    <button class="tool-pill" type="button" data-tool="draw">Draw</button>
+                    <button class="tool-pill" type="button" data-tool="draw">Fill</button>
                     <button class="tool-pill" type="button" data-tool="focus">Focus</button>
                     <button class="tool-pill" type="button" data-tool="comment">Comment</button>
                 </div>
+            </div>
+            <div class="ribbon-group">
+                <span class="ribbon-label">View</span>
                 <div class="editor-control-group">
                     <label class="editor-control">
                         <span>Visual mode</span>
                         <select data-visual-mode>
-                            <option value="neon">Neon Studio</option>
+                            <option value="neon">Gold Ledger</option>
                             <option value="heatmap">Heatmap</option>
                             <option value="focus">Focus Grid</option>
                         </select>
@@ -108,60 +103,90 @@
                     </label>
                 </div>
             </div>
-            <div class="editor-toolbar">
-                <label class="name-box" for="formula-bar" data-active-cell>A1</label>
-                <input id="formula-bar" class="formula-bar" type="text" placeholder="Type a value or formula-like text">
-                <button class="button button-secondary slim" type="button" data-add-row>Add row</button>
-                <button class="button button-secondary slim" type="button" data-add-column>Add column</button>
+            <div class="ribbon-group ribbon-group-swatch">
+                <span class="ribbon-label">Accent</span>
+                <div class="stage-swatches">
+                    <button class="swatch-chip is-active" type="button" data-swatch="#d4af37" style="--swatch:#d4af37"></button>
+                    <button class="swatch-chip" type="button" data-swatch="#f0cf72" style="--swatch:#f0cf72"></button>
+                    <button class="swatch-chip" type="button" data-swatch="#b8860b" style="--swatch:#b8860b"></button>
+                    <button class="swatch-chip" type="button" data-swatch="#8d6b2f" style="--swatch:#8d6b2f"></button>
+                </div>
             </div>
-            <p class="save-state" data-save-state>All changes are local until you edit the grid.</p>
-            <div class="creative-workbench">
-                <aside class="tool-rail" aria-label="Editor tools">
-                    <button class="rail-button is-active" type="button" data-tool="select" title="Select">S</button>
-                    <button class="rail-button" type="button" data-tool="draw" title="Draw">D</button>
-                    <button class="rail-button" type="button" data-tool="focus" title="Focus">F</button>
-                    <button class="rail-button" type="button" data-tool="comment" title="Comment">C</button>
-                </aside>
-                <div class="sheet-stage">
-                    <div class="stage-meta">
-                        <div>
-                            <p class="eyebrow">Creative spreadsheet editor</p>
-                            <strong data-tool-label>Selection tool active</strong>
-                        </div>
-                        <div class="stage-swatches">
-                            <button class="swatch-chip is-active" type="button" data-swatch="#78ffd6" style="--swatch:#78ffd6"></button>
-                            <button class="swatch-chip" type="button" data-swatch="#43bbff" style="--swatch:#43bbff"></button>
-                            <button class="swatch-chip" type="button" data-swatch="#ff9b71" style="--swatch:#ff9b71"></button>
-                            <button class="swatch-chip" type="button" data-swatch="#f8e16c" style="--swatch:#f8e16c"></button>
-                        </div>
+        </div>
+
+        <div class="editor-toolbar spreadsheet-toolbar">
+            <label class="name-box" for="formula-bar" data-active-cell>A1</label>
+            <input id="formula-bar" class="formula-bar" type="text" placeholder="Type a value or formula-like text">
+            <button class="button button-secondary slim" type="button" data-add-row>Add row</button>
+            <button class="button button-secondary slim" type="button" data-add-column>Add column</button>
+        </div>
+
+        <div class="studio-status-grid">
+            <article class="status-tile">
+                <span>Filled cells</span>
+                <strong data-sheet-filled>0</strong>
+            </article>
+            <article class="status-tile">
+                <span>Numeric cells</span>
+                <strong data-sheet-numeric>0</strong>
+            </article>
+            <article class="status-tile">
+                <span>Numeric sum</span>
+                <strong data-sheet-sum>0</strong>
+            </article>
+            <article class="status-tile status-tile-wide">
+                <span>Engine</span>
+                <strong data-engine-mode>Loading browser sheet tools…</strong>
+            </article>
+        </div>
+
+        <p class="save-state" data-save-state>Autosave starts after your first edit.</p>
+
+        <div class="sheet-workspace">
+            <aside class="tool-rail" aria-label="Editor tools">
+                <button class="rail-button is-active" type="button" data-tool="select" title="Select">Sel</button>
+                <button class="rail-button" type="button" data-tool="draw" title="Fill">Fill</button>
+                <button class="rail-button" type="button" data-tool="focus" title="Focus">Focus</button>
+                <button class="rail-button" type="button" data-tool="comment" title="Comment">Note</button>
+            </aside>
+            <section class="sheet-stage">
+                <div class="stage-meta spreadsheet-stage-meta">
+                    <div>
+                        <p class="eyebrow">Workbook grid</p>
+                        <strong data-tool-label>Selection tool active</strong>
                     </div>
-                    <div class="sheet-frame" data-sheet-frame>
-                        <canvas class="sheet-canvas" data-sheet-canvas></canvas>
-                        <div class="sheet-grid" data-sheet-grid></div>
+                    <div class="stage-meta-inline">
+                        <div class="stage-inline-block">
+                            <span class="stage-kicker">Active</span>
+                            <strong data-active-summary>A1</strong>
+                        </div>
+                        <div class="stage-inline-block stage-inline-wide">
+                            <span class="stage-kicker">Cell value</span>
+                            <p data-active-value>Empty cell</p>
+                        </div>
+                        <div class="stage-inline-block">
+                            <span class="stage-kicker">Renderer</span>
+                            <strong data-renderer-kind>Loading</strong>
+                        </div>
                     </div>
                 </div>
-                <aside class="inspector-panel">
-                    <div class="inspector-card">
-                        <span class="inspector-label">Active cell</span>
-                        <strong data-active-summary>A1</strong>
-                        <p data-active-value>Empty cell</p>
-                    </div>
-                    <div class="inspector-card">
-                        <span class="inspector-label">Renderer</span>
-                        <strong data-renderer-kind>Loading</strong>
-                        <p>Rust/WebAssembly will drive visuals when the compiled bundle is available.</p>
-                    </div>
-                    <div class="inspector-card">
-                        <span class="inspector-label">Layers</span>
-                        <div class="layer-list">
-                            <div class="layer-row"><span class="layer-dot"></span><span>Grid chrome</span></div>
-                            <div class="layer-row"><span class="layer-dot layer-dot-accent"></span><span>Heat overlays</span></div>
-                            <div class="layer-row"><span class="layer-dot layer-dot-warm"></span><span>Selection glow</span></div>
-                        </div>
-                    </div>
-                </aside>
+                <div class="sheet-frame" data-sheet-frame>
+                    <canvas class="sheet-canvas" data-sheet-canvas></canvas>
+                    <div class="sheet-grid" data-sheet-grid></div>
+                </div>
+            </section>
+        </div>
+
+        <footer class="editor-statusbar">
+            <div class="statusbar-item">
+                <strong>View</strong>
+                <span data-visual-mode-label>Gold Ledger mode with warm sheet overlays.</span>
             </div>
-        </section>
+            <div class="statusbar-item">
+                <strong>Tip</strong>
+                <span>Use <code>Tab</code> to move right and <code>Enter</code> to move down.</span>
+            </div>
+        </footer>
     </section>
 </main>
 

@@ -208,6 +208,7 @@ def create_app() -> Flask:
             title=f"{workspace['name']} Workspace",
             description=f"Edit and analyze the {workspace['name']} spreadsheet workspace.",
             canonical_url=canonical(f"/workspace/{workspace['slug']}"),
+            body_class="workspace-body",
             workspace_bootstrap={
                 "user": g.current_user,
                 "workspace": workspace,
