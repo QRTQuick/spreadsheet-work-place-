@@ -1,0 +1,141 @@
+{% extends "base.html" %}
+
+{% block body %}
+<main class="workspace-shell">
+    <header class="workspace-header">
+        <div class="workspace-breadcrumbs">
+            <a class="brand" href="{{ url_for('dashboard_page') }}">
+                <span class="brand-mark">ЭТ</span>
+                <span class="brand-copy">
+                    <strong>{{ app_name }}</strong>
+                    <small>{{ workspace_bootstrap.workspace.name }}</small>
+                </span>
+            </a>
+        </div>
+        <div class="workspace-actions">
+            <label class="button button-secondary file-button">
+                Import CSV
+                <input type="file" accept=".csv,text/csv" data-import-input hidden>
+            </label>
+            <a class="button button-secondary" href="{{ url_for('export_sheet_api', workspace_id=workspace_bootstrap.workspace.id) }}">Download CSV</a>
+            <a class="button button-primary" href="{{ url_for('dashboard_page') }}">Back to Dashboard</a>
+        </div>
+    </header>
+
+    <section class="workspace-main">
+        <aside class="workspace-sidebar panel-card" data-reveal>
+            <p class="eyebrow">Workspace details</p>
+            <h1>{{ workspace_bootstrap.workspace.name }}</h1>
+            <p>{{ workspace_bootstrap.workspace.description or "This workspace is ready for importing and editing spreadsheet data." }}</p>
+            <div class="workspace-stat-stack">
+                <article>
+                    <strong data-sheet-filled>0</strong>
+                    <span>Filled cells</span>
+                </article>
+                <article>
+                    <strong data-sheet-numeric>0</strong>
+                    <span>Numeric cells</span>
+                </article>
+                <article>
+                    <strong data-sheet-sum>0</strong>
+                    <span>Numeric sum</span>
+                </article>
+            </div>
+            <div class="workspace-note">
+                <strong>Engine status</strong>
+                <p data-engine-mode>Loading browser sheet tools…</p>
+            </div>
+            <div class="workspace-note">
+                <strong>Creative system</strong>
+                <p data-visual-mode-label>Neon Studio mode with live graphics.</p>
+            </div>
+        </aside>
+
+        <section class="workspace-editor panel-card" data-reveal>
+            <div class="editor-ribbon">
+                <div class="editor-mode-group">
+                    <button class="tool-pill is-active" type="button" data-tool="select">Select</button>
+                    <button class="tool-pill" type="button" data-tool="draw">Draw</button>
+                    <button class="tool-pill" type="button" data-tool="focus">Focus</button>
+                    <button class="tool-pill" type="button" data-tool="comment">Comment</button>
+                </div>
+                <div class="editor-control-group">
+                    <label class="editor-control">
+                        <span>Visual mode</span>
+                        <select data-visual-mode>
+                            <option value="neon">Neon Studio</option>
+                            <option value="heatmap">Heatmap</option>
+                            <option value="focus">Focus Grid</option>
+                        </select>
+                    </label>
+                    <label class="editor-control">
+                        <span>Zoom <strong data-zoom-value>100%</strong></span>
+                        <input type="range" min="70" max="160" value="100" step="5" data-zoom-slider>
+                    </label>
+                </div>
+            </div>
+            <div class="editor-toolbar">
+                <label class="name-box" for="formula-bar" data-active-cell>A1</label>
+                <input id="formula-bar" class="formula-bar" type="text" placeholder="Type a value or formula-like text">
+                <button class="button button-secondary slim" type="button" data-add-row>Add row</button>
+                <button class="button button-secondary slim" type="button" data-add-column>Add column</button>
+            </div>
+            <p class="save-state" data-save-state>All changes are local until you edit the grid.</p>
+            <div class="creative-workbench">
+                <aside class="tool-rail" aria-label="Editor tools">
+                    <button class="rail-button is-active" type="button" data-tool="select" title="Select">S</button>
+                    <button class="rail-button" type="button" data-tool="draw" title="Draw">D</button>
+                    <button class="rail-button" type="button" data-tool="focus" title="Focus">F</button>
+                    <button class="rail-button" type="button" data-tool="comment" title="Comment">C</button>
+                </aside>
+                <div class="sheet-stage">
+                    <div class="stage-meta">
+                        <div>
+                            <p class="eyebrow">Creative spreadsheet editor</p>
+                            <strong data-tool-label>Selection tool active</strong>
+                        </div>
+                        <div class="stage-swatches">
+                            <button class="swatch-chip is-active" type="button" data-swatch="#78ffd6" style="--swatch:#78ffd6"></button>
+                            <button class="swatch-chip" type="button" data-swatch="#43bbff" style="--swatch:#43bbff"></button>
+                            <button class="swatch-chip" type="button" data-swatch="#ff9b71" style="--swatch:#ff9b71"></button>
+                            <button class="swatch-chip" type="button" data-swatch="#f8e16c" style="--swatch:#f8e16c"></button>
+                        </div>
+                    </div>
+                    <div class="sheet-frame" data-sheet-frame>
+                        <canvas class="sheet-canvas" data-sheet-canvas></canvas>
+                        <div class="sheet-grid" data-sheet-grid></div>
+                    </div>
+                </div>
+                <aside class="inspector-panel">
+                    <div class="inspector-card">
+                        <span class="inspector-label">Active cell</span>
+                        <strong data-active-summary>A1</strong>
+                        <p data-active-value>Empty cell</p>
+                    </div>
+                    <div class="inspector-card">
+                        <span class="inspector-label">Renderer</span>
+                        <strong data-renderer-kind>Loading</strong>
+                        <p>Rust/WebAssembly will drive visuals when the compiled bundle is available.</p>
+                    </div>
+                    <div class="inspector-card">
+                        <span class="inspector-label">Layers</span>
+                        <div class="layer-list">
+                            <div class="layer-row"><span class="layer-dot"></span><span>Grid chrome</span></div>
+                            <div class="layer-row"><span class="layer-dot layer-dot-accent"></span><span>Heat overlays</span></div>
+                            <div class="layer-row"><span class="layer-dot layer-dot-warm"></span><span>Selection glow</span></div>
+                        </div>
+                    </div>
+                </aside>
+            </div>
+        </section>
+    </section>
+</main>
+
+<script id="workspace-data" type="application/json">{{ workspace_bootstrap|tojson }}</script>
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ asset_url('wasm/wasm_exec.js') }}" defer></script>
+<script src="{{ asset_url('js/wasm-loader.js') }}" defer></script>
+<script src="{{ asset_url('js/workspace.js') }}" defer></script>
+{% endblock %}

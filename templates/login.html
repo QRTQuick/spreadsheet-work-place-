@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+
+{% block body %}
+<main class="auth-shell">
+    <section class="auth-showcase" data-reveal>
+        <a class="brand" href="{{ url_for('landing_page') }}">
+            <span class="brand-mark">ЭТ</span>
+            <span class="brand-copy">
+                <strong>{{ app_name }}</strong>
+                <small>Premium spreadsheet operations</small>
+            </span>
+        </a>
+        <p class="eyebrow">Welcome back</p>
+        <h1>Open your private spreadsheet workspace.</h1>
+        <p>
+            Log in to manage personal workspaces, import CSV data, review activity,
+            and continue editing inside your sheet canvas.
+        </p>
+        <div class="showcase-stack">
+            <article><strong>Private sessions</strong><span>Each workspace is tied to the authenticated user.</span></article>
+            <article><strong>Fast workflow</strong><span>Jump from dashboard to sheet editing in one click.</span></article>
+            <article><strong>Premium feel</strong><span>Multiple pages, animation, and a polished app shell.</span></article>
+        </div>
+    </section>
+    <section class="auth-panel">
+        <div class="panel-card auth-card" data-reveal>
+            <p class="eyebrow">Login</p>
+            <h2>Continue to dashboard</h2>
+            <form class="auth-form" data-auth-form data-endpoint="{{ url_for('login_api') }}">
+                <label>
+                    <span>Email address</span>
+                    <input type="email" name="email" placeholder="you@example.com" required>
+                </label>
+                <label>
+                    <span>Password</span>
+                    <input type="password" name="password" placeholder="Enter your password" required>
+                </label>
+                <p class="form-message" data-form-message></p>
+                <button class="button button-primary" type="submit">Log In</button>
+            </form>
+            <p class="auth-footnote">No account yet? <a href="{{ url_for('signup_page') }}">Create one here</a>.</p>
+        </div>
+    </section>
+</main>
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ asset_url('js/auth.js') }}" defer></script>
+{% endblock %}

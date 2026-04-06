@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+
+{% block body %}
+<main class="auth-shell">
+    <section class="auth-showcase" data-reveal>
+        <a class="brand" href="{{ url_for('landing_page') }}">
+            <span class="brand-mark">ЭТ</span>
+            <span class="brand-copy">
+                <strong>{{ app_name }}</strong>
+                <small>Premium spreadsheet operations</small>
+            </span>
+        </a>
+        <p class="eyebrow">Create account</p>
+        <h1>Launch your first workspace in minutes.</h1>
+        <p>
+            New users start with a ready-to-edit workspace, secure access, a dashboard, and CSV-ready spreadsheet controls.
+        </p>
+        <div class="showcase-stack">
+            <article><strong>Instant setup</strong><span>Every new account gets a starter workspace automatically.</span></article>
+            <article><strong>Neon-ready backend</strong><span>Use SQLite locally now and switch to Neon in production.</span></article>
+            <article><strong>Growth-ready SEO</strong><span>Marketing and app pages are structured for discoverability.</span></article>
+        </div>
+    </section>
+    <section class="auth-panel">
+        <div class="panel-card auth-card" data-reveal>
+            <p class="eyebrow">Signup</p>
+            <h2>Create your account</h2>
+            <form class="auth-form" data-auth-form data-endpoint="{{ url_for('signup_api') }}">
+                <label>
+                    <span>Full name</span>
+                    <input type="text" name="fullName" placeholder="Alex Johnson" required>
+                </label>
+                <label>
+                    <span>Email address</span>
+                    <input type="email" name="email" placeholder="you@example.com" required>
+                </label>
+                <label>
+                    <span>Password</span>
+                    <input type="password" name="password" placeholder="Minimum 8 characters" required minlength="8">
+                </label>
+                <p class="form-message" data-form-message></p>
+                <button class="button button-primary" type="submit">Create Account</button>
+            </form>
+            <p class="auth-footnote">Already registered? <a href="{{ url_for('login_page') }}">Log in instead</a>.</p>
+        </div>
+    </section>
+</main>
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ asset_url('js/auth.js') }}" defer></script>
+{% endblock %}

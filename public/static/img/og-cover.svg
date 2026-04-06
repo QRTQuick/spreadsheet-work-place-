@@ -1,0 +1,25 @@
+<svg width="1200" height="630" viewBox="0 0 1200 630" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="1200" height="630" fill="#071018"/>
+  <circle cx="218" cy="140" r="170" fill="#78FFD6" fill-opacity="0.18"/>
+  <circle cx="1030" cy="120" r="130" fill="#FF9B71" fill-opacity="0.18"/>
+  <circle cx="960" cy="540" r="200" fill="#39A8FF" fill-opacity="0.14"/>
+  <rect x="72" y="74" width="1056" height="482" rx="36" fill="url(#paint0_linear)" stroke="white" stroke-opacity="0.16"/>
+  <rect x="104" y="112" width="88" height="88" rx="22" fill="url(#paint1_linear)"/>
+  <path d="M130 138H166V150H146V160H162V172H146V188H134V172H118V160H134V150H130V138Z" fill="#04111B"/>
+  <text x="224" y="165" fill="#EFF6FF" font-size="42" font-family="Manrope, Arial, sans-serif" font-weight="800">электронная таблица</text>
+  <text x="104" y="252" fill="#EFF6FF" font-size="76" font-family="Manrope, Arial, sans-serif" font-weight="800">Premium spreadsheet</text>
+  <text x="104" y="332" fill="#EFF6FF" font-size="76" font-family="Manrope, Arial, sans-serif" font-weight="800">workspace experience</text>
+  <text x="104" y="398" fill="#96AAC4" font-size="30" font-family="Manrope, Arial, sans-serif">Private user workspaces, CSV import/export, Flask backend, Neon-ready data, and Go WebAssembly support.</text>
+  <rect x="104" y="452" width="252" height="58" rx="29" fill="#78FFD6" fill-opacity="0.14" stroke="#78FFD6" stroke-opacity="0.32"/>
+  <text x="134" y="489" fill="#78FFD6" font-size="24" font-family="IBM Plex Mono, monospace">Production-ready scaffold</text>
+  <defs>
+    <linearGradient id="paint0_linear" x1="160" y1="80" x2="1024" y2="556" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#111D36"/>
+      <stop offset="1" stop-color="#0A1326"/>
+    </linearGradient>
+    <linearGradient id="paint1_linear" x1="112" y1="116" x2="188" y2="194" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#78FFD6"/>
+      <stop offset="1" stop-color="#39A8FF"/>
+    </linearGradient>
+  </defs>
+</svg>

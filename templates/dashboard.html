@@ -1,0 +1,82 @@
+{% extends "base.html" %}
+
+{% block body %}
+<main class="app-shell">
+    <header class="app-header">
+        <a class="brand" href="{{ url_for('landing_page') }}">
+            <span class="brand-mark">ЭТ</span>
+            <span class="brand-copy">
+                <strong>{{ app_name }}</strong>
+                <small>Workspace dashboard</small>
+            </span>
+        </a>
+        <div class="app-header-actions">
+            <span class="user-chip">{{ current_user.full_name }}</span>
+            <button class="button button-secondary" type="button" data-logout-button>Log Out</button>
+        </div>
+    </header>
+
+    <section class="dashboard-hero panel-card" data-reveal>
+        <div>
+            <p class="eyebrow">Dashboard</p>
+            <h1>Your spreadsheet workspaces live here.</h1>
+            <p>Create named workspaces, keep them unique to your account, and jump directly into the editor.</p>
+        </div>
+        <div class="dashboard-stats">
+            <article>
+                <strong data-total-workspaces>0</strong>
+                <span>Workspaces</span>
+            </article>
+            <article>
+                <strong data-total-events>0</strong>
+                <span>Recent events</span>
+            </article>
+            <article>
+                <strong>CSV</strong>
+                <span>Import/export ready</span>
+            </article>
+        </div>
+    </section>
+
+    <section class="dashboard-grid">
+        <div class="panel-card" data-reveal>
+            <p class="eyebrow">Create workspace</p>
+            <h2>Start a new sheet environment</h2>
+            <form class="workspace-form" data-workspace-form>
+                <label>
+                    <span>Workspace name</span>
+                    <input type="text" name="name" placeholder="Quarterly Planning Hub" required>
+                </label>
+                <label>
+                    <span>Description</span>
+                    <textarea name="description" rows="4" placeholder="What is this workspace for?"></textarea>
+                </label>
+                <p class="form-message" data-workspace-message></p>
+                <button class="button button-primary" type="submit">Create Workspace</button>
+            </form>
+        </div>
+
+        <div class="panel-card" data-reveal>
+            <p class="eyebrow">Recent activity</p>
+            <h2>What changed recently</h2>
+            <div class="activity-list" data-activity-list></div>
+        </div>
+    </section>
+
+    <section class="panel-card" data-reveal>
+        <div class="section-title-row">
+            <div>
+                <p class="eyebrow">Private workspaces</p>
+                <h2>Your saved spreadsheet environments</h2>
+            </div>
+        </div>
+        <div class="workspace-list" data-workspace-list></div>
+    </section>
+</main>
+
+<script id="dashboard-data" type="application/json">{{ dashboard_bootstrap|tojson }}</script>
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ asset_url('js/dashboard.js') }}" defer></script>
+{% endblock %}

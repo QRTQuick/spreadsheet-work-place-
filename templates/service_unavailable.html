@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+
+{% block body %}
+<main class="auth-shell">
+    <section class="auth-showcase" data-reveal>
+        <a class="brand" href="{{ url_for('landing_page') }}">
+            <span class="brand-mark">ЭТ</span>
+            <span class="brand-copy">
+                <strong>{{ app_name }}</strong>
+                <small>Temporary backend outage</small>
+            </span>
+        </a>
+        <p class="eyebrow">Service status</p>
+        <h1>The app shell is live, but the database is unavailable right now.</h1>
+        <p>
+            The landing page and frontend are ready, but account and workspace features need a reachable database before they can respond.
+        </p>
+    </section>
+    <section class="auth-panel">
+        <div class="panel-card auth-card" data-reveal>
+            <p class="eyebrow">Details</p>
+            <h2>What to check</h2>
+            <div class="showcase-stack">
+                <article><strong>SQLite in sandbox</strong><span>The current environment may block local SQLite writes.</span></article>
+                <article><strong>Neon connection</strong><span>Point `DATABASE_URL` to Neon or another PostgreSQL instance for production.</span></article>
+                <article><strong>Error detail</strong><span>{{ db_error }}</span></article>
+            </div>
+            <div class="hero-actions">
+                <a class="button button-primary" href="{{ url_for('landing_page') }}">Back to Landing Page</a>
+            </div>
+        </div>
+    </section>
+</main>
+{% endblock %}

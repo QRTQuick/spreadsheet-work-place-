@@ -1,0 +1,192 @@
+{% extends "base.html" %}
+
+{% block body %}
+<header class="site-header">
+    <a class="brand" href="{{ url_for('landing_page') }}">
+        <span class="brand-mark">ЭТ</span>
+        <span class="brand-copy">
+            <strong>{{ app_name }}</strong>
+            <small>Private spreadsheet workspaces</small>
+        </span>
+    </a>
+    <button class="nav-toggle" type="button" data-nav-toggle aria-label="Toggle navigation">
+        <span></span>
+        <span></span>
+    </button>
+    <nav class="site-nav" data-nav-menu>
+        <a href="#features">Features</a>
+        <a href="#workflow">Workflow</a>
+        <a href="#seo">SEO</a>
+        <a class="ghost-link" href="{{ url_for('login_page') }}">Log in</a>
+        <a class="button button-primary" href="{{ url_for('signup_page') }}">Start Free</a>
+    </nav>
+</header>
+
+<main class="landing-shell">
+    <section class="hero" data-reveal>
+        <div class="hero-copy">
+            <p class="eyebrow">Spreadsheet workspace software for serious teams</p>
+            <h1>Turn raw tables into a private premium workspace your users trust.</h1>
+            <p class="hero-text">
+                электронная таблица combines login, private user workspaces, CSV import and export,
+                autosave, analytics panels, and a production-ready Flask architecture powered by Neon.
+            </p>
+            <div class="hero-actions">
+                <a class="button button-primary" href="{{ url_for('signup_page') }}">Create Workspace</a>
+                <a class="button button-secondary" href="{{ url_for('login_page') }}">Open Live App</a>
+            </div>
+            <div class="hero-metrics">
+                <article class="metric-card">
+                    <span class="metric-value" data-count="120">0</span>
+                    <span class="metric-label">grid rows supported in the starter build</span>
+                </article>
+                <article class="metric-card">
+                    <span class="metric-value" data-count="40">0</span>
+                    <span class="metric-label">columns per workspace sheet</span>
+                </article>
+                <article class="metric-card">
+                    <span class="metric-value" data-count="100">0</span>
+                    <span class="metric-label">private ownership for each user session</span>
+                </article>
+            </div>
+        </div>
+        <div class="hero-preview" data-float-card>
+            <div class="preview-window">
+                <div class="preview-topbar">
+                    <span></span><span></span><span></span>
+                    <p>Revenue Planning / Q3</p>
+                </div>
+                <div class="preview-toolbar">
+                    <span class="pill">Autosave</span>
+                    <span class="pill">CSV Import</span>
+                    <span class="pill">Neon Sync</span>
+                </div>
+                <div class="preview-grid">
+                    <div class="preview-col heads">A</div>
+                    <div class="preview-col heads">B</div>
+                    <div class="preview-col heads">C</div>
+                    <div class="preview-col heads">D</div>
+                    <div class="preview-cell">Month</div>
+                    <div class="preview-cell">MRR</div>
+                    <div class="preview-cell">Leads</div>
+                    <div class="preview-cell">Owner</div>
+                    <div class="preview-cell">Jan</div>
+                    <div class="preview-cell bright">$14,200</div>
+                    <div class="preview-cell">381</div>
+                    <div class="preview-cell">Ops</div>
+                    <div class="preview-cell">Feb</div>
+                    <div class="preview-cell bright">$18,900</div>
+                    <div class="preview-cell">452</div>
+                    <div class="preview-cell">Growth</div>
+                </div>
+                <div class="preview-footer">
+                    <div>
+                        <strong>Insight</strong>
+                        <p>Go/WebAssembly sheet tools keep numeric summaries fast.</p>
+                    </div>
+                    <div class="sparkline" aria-hidden="true">
+                        <span></span><span></span><span></span><span></span><span></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section-grid" id="features">
+        <article class="feature-card" data-reveal>
+            <span class="feature-index">01</span>
+            <h2>Per-user private workspaces</h2>
+            <p>Every account gets isolated workspaces, unique URLs, secure sessions, and personal activity history.</p>
+        </article>
+        <article class="feature-card" data-reveal>
+            <span class="feature-index">02</span>
+            <h2>Premium import and export flow</h2>
+            <p>Bring spreadsheet data in through CSV, edit live in the browser, then export the current workspace instantly.</p>
+        </article>
+        <article class="feature-card" data-reveal>
+            <span class="feature-index">03</span>
+            <h2>Full-stack production structure</h2>
+            <p>Flask, Neon-ready database wiring, SEO pages, a web manifest, and a Go WebAssembly helper pipeline are already scaffolded.</p>
+        </article>
+    </section>
+
+    <section class="story-panel" id="workflow" data-reveal>
+        <div class="story-copy">
+            <p class="eyebrow">User journey</p>
+            <h2>Login. Create. Import. Analyze. Export.</h2>
+            <p>
+                The app is structured as a multi-page product, not a single disconnected screen.
+                Visitors land on the marketing page, sign up, create a workspace, and move directly into a spreadsheet canvas.
+            </p>
+        </div>
+        <div class="story-steps">
+            <article>
+                <strong>Step 1</strong>
+                <p>Sign up or log in with a secure session.</p>
+            </article>
+            <article>
+                <strong>Step 2</strong>
+                <p>Create a named workspace unique to that user.</p>
+            </article>
+            <article>
+                <strong>Step 3</strong>
+                <p>Import spreadsheet data, edit the grid, and autosave to the backend.</p>
+            </article>
+            <article>
+                <strong>Step 4</strong>
+                <p>Export the latest CSV or keep building inside the browser workspace.</p>
+            </article>
+        </div>
+    </section>
+
+    <section class="spotlight-section" id="seo">
+        <div class="spotlight-copy" data-reveal>
+            <p class="eyebrow">Discoverability</p>
+            <h2>SEO foundations are included from day one.</h2>
+            <p>
+                Canonical links, Open Graph tags, JSON-LD structured data, a sitemap, <code>robots.txt</code>, and strong metadata are built in so
+                search engines can understand the product before you start content expansion.
+            </p>
+        </div>
+        <div class="spotlight-panel" data-reveal>
+            <div class="spotlight-line">
+                <span>Landing page metadata</span>
+                <strong>Ready</strong>
+            </div>
+            <div class="spotlight-line">
+                <span>Structured data</span>
+                <strong>SoftwareApplication</strong>
+            </div>
+            <div class="spotlight-line">
+                <span>Sitemap and robots</span>
+                <strong>Included</strong>
+            </div>
+            <div class="spotlight-line">
+                <span>App installability</span>
+                <strong>Manifest added</strong>
+            </div>
+        </div>
+    </section>
+
+    <section class="cta-panel" data-reveal>
+        <div>
+            <p class="eyebrow">Ready to launch</p>
+            <h2>Start with a premium landing page and a working spreadsheet product underneath it.</h2>
+        </div>
+        <div class="hero-actions">
+            <a class="button button-primary" href="{{ url_for('signup_page') }}">Create an account</a>
+            <a class="button button-secondary" href="{{ url_for('dashboard_page') if current_user else url_for('login_page') }}">See dashboard</a>
+        </div>
+    </section>
+</main>
+
+<footer class="site-footer">
+    <p>{{ app_name }} blends product marketing, private data workspaces, and spreadsheet operations into one web experience.</p>
+    <div class="footer-links">
+        <a href="{{ url_for('landing_page') }}">Home</a>
+        <a href="{{ url_for('signup_page') }}">Signup</a>
+        <a href="{{ url_for('login_page') }}">Login</a>
+        <a href="{{ url_for('sitemap') }}">Sitemap</a>
+    </div>
+</footer>
+{% endblock %}

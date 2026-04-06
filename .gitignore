@@ -324,3 +324,31 @@ TSWLatexianTemp*
 # option is specified. Footnotes are the stored in a file with suffix Notes.bib.
 # Uncomment the next line to have this generated file ignored.
 #*Notes.bib
+
+## Python / Flask
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+.coverage.*
+.venv/
+venv/
+env/
+.env
+.env.local
+instance/
+local-dev.db
+*.sqlite3
+*.db-journal
+
+## Runtime / build artifacts
+node_modules/
+dist/
+build/
+public/static/wasm/*.wasm
+rust-wasm/**/target/
+
+## Desktop
+desktop/__pycache__/
