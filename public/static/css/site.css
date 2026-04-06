@@ -2622,3 +2622,455 @@ body::before,
         grid-template-columns: 1fr;
     }
 }
+
+/* Workspace Excel-style refinement */
+
+.workspace-shell.workspace-app {
+    width: min(1600px, calc(100% - 1rem));
+}
+
+.workspace-header.workspace-app-header {
+    margin-top: 0.75rem;
+    padding: 0.7rem 1rem;
+    border-radius: 8px;
+    border-color: rgba(26, 115, 232, 0.18);
+}
+
+.workspace-studio {
+    padding-top: 0.25rem;
+}
+
+.studio-heading {
+    padding-bottom: 0.65rem;
+    border-bottom: 1px solid rgba(26, 115, 232, 0.10);
+}
+
+.studio-heading h1 {
+    font-size: clamp(1.55rem, 2.2vw, 2rem);
+    line-height: 1.1;
+    color: #15345c;
+}
+
+.workspace-subtitle,
+.workspace-meta-line,
+.editor-info-line,
+.sheet-panel-head,
+.statusbar-item span {
+    color: #51657f;
+}
+
+.workspace-meta-line {
+    font-size: 0.88rem;
+}
+
+.ribbon-tabs {
+    margin-top: 0.25rem;
+    border-bottom-color: rgba(26, 115, 232, 0.14);
+}
+
+.ribbon-tab {
+    min-height: 2rem;
+    padding: 0.35rem 0.7rem;
+    font-size: 0.88rem;
+    color: #5c7089;
+}
+
+.ribbon-tab.is-active {
+    color: #1a73e8;
+    font-weight: 600;
+}
+
+.editor-ribbon {
+    grid-template-columns: 1.1fr 1fr 1.15fr;
+    gap: 0.9rem;
+    padding: 0.85rem 0 0.9rem;
+}
+
+.ribbon-group {
+    padding: 0.15rem 0;
+}
+
+.ribbon-label {
+    color: #1a73e8;
+    letter-spacing: 0.06em;
+    font-size: 0.75rem;
+}
+
+.editor-mode-group,
+.editor-control-group {
+    gap: 0.45rem;
+}
+
+.tool-pill,
+.formula-pill {
+    min-height: 2rem;
+    padding: 0.4rem 0.7rem;
+    border: 1px solid rgba(26, 115, 232, 0.12);
+    background: #ffffff;
+    color: #35506f;
+}
+
+.tool-pill.is-active,
+.rail-button.is-active,
+.formula-pill:hover {
+    border-color: rgba(26, 115, 232, 0.24);
+    background: rgba(26, 115, 232, 0.08);
+    color: #1a73e8;
+}
+
+.editor-control label,
+.editor-control span,
+.editor-control strong {
+    color: #35506f;
+}
+
+.editor-toolbar {
+    align-items: center;
+    padding-bottom: 0.65rem;
+    border-bottom: 1px solid rgba(26, 115, 232, 0.10);
+}
+
+.name-box,
+.formula-prefix,
+.formula-bar {
+    min-height: 2.7rem;
+}
+
+.formula-bar {
+    border-color: rgba(26, 115, 232, 0.18);
+}
+
+.formula-bar:focus,
+.editor-control select:focus,
+.sheet-cell:focus {
+    outline: none;
+}
+
+.editor-info-line {
+    gap: 0.6rem 1rem;
+    font-size: 0.86rem;
+}
+
+.editor-info-line strong {
+    color: #15345c;
+}
+
+.sheet-panel-head strong {
+    color: #15345c;
+}
+
+.sheet-frame {
+    border-color: rgba(26, 115, 232, 0.18);
+}
+
+.sheet-col-head,
+.sheet-row-head {
+    background: #eef4ff;
+    color: #46607e;
+    font-weight: 600;
+}
+
+.sheet-cell {
+    color: #1f2d3d;
+}
+
+.sheet-cell::placeholder {
+    color: #8ea1b8;
+}
+
+.sheet-cell.is-highlighted {
+    background: rgba(26, 115, 232, 0.06);
+}
+
+.editor-statusbar {
+    color: #51657f;
+}
+
+.sheet-tab {
+    min-height: 2rem;
+    padding: 0.35rem 0.8rem;
+}
+
+@media (max-width: 1200px) {
+    .editor-ribbon {
+        grid-template-columns: 1fr 1fr;
+    }
+}
+
+@media (max-width: 900px) {
+    .editor-ribbon {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* Workspace flat Excel-style pass */
+
+body.workspace-body {
+    background: #f3f6fb;
+}
+
+body.workspace-body::before {
+    opacity: 0.07;
+    mask-image: none;
+}
+
+.workspace-body .workspace-shell.workspace-app {
+    width: min(100%, calc(100% - 0.5rem));
+    padding-bottom: 1rem;
+}
+
+.workspace-body .workspace-header.workspace-app-header {
+    width: calc(100% - 1rem);
+    margin: 0.5rem auto 0;
+    padding: 0.55rem 0.85rem;
+    border: 1px solid #d3ddeb;
+    border-radius: 8px;
+    background: #ffffff;
+    box-shadow: none;
+    backdrop-filter: none;
+}
+
+.workspace-body .workspace-titlebar strong {
+    color: #15345c;
+    font-size: 1rem;
+}
+
+.workspace-body .workspace-titlebar small {
+    color: #61758f;
+}
+
+.workspace-body .workspace-studio.panel-card {
+    margin-top: 0.35rem;
+    padding: 0;
+    border: 1px solid #d3ddeb;
+    border-radius: 8px;
+    background: #ffffff;
+    box-shadow: none;
+}
+
+.workspace-body .workspace-guide {
+    margin: 0;
+    padding: 0.9rem 1rem;
+    border: 0;
+    border-bottom: 1px solid #dbe4f0;
+    border-radius: 0;
+    background: #f7faff;
+    box-shadow: none;
+}
+
+.workspace-body .workspace-guide h2 {
+    font-size: 1.15rem;
+}
+
+.workspace-body .ribbon-tabs {
+    gap: 0;
+    margin: 0;
+    padding: 0 0.75rem;
+    border-bottom: 1px solid #dbe4f0;
+    background: #f8fbff;
+}
+
+.workspace-body .ribbon-tab {
+    appearance: none;
+    border: 0;
+    padding: 0.55rem 0.85rem 0.5rem;
+    color: #4f6480;
+    border-bottom: 2px solid transparent;
+    border-radius: 0;
+    background: transparent;
+    cursor: pointer;
+}
+
+.workspace-body .ribbon-tab.is-active {
+    color: #185abd;
+    border-bottom-color: #185abd;
+    background: transparent;
+}
+
+.workspace-body .editor-ribbon {
+    padding: 0.75rem;
+    border-bottom: 1px solid #dbe4f0;
+    background: #ffffff;
+}
+
+.workspace-body .ribbon-panel {
+    display: none;
+    gap: 1rem;
+    align-items: end;
+}
+
+.workspace-body .ribbon-panel.is-active {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, max-content));
+}
+
+.workspace-body .ribbon-group {
+    min-width: 0;
+    padding: 0;
+}
+
+.workspace-body .ribbon-label {
+    margin-bottom: 0.45rem;
+    color: #185abd;
+}
+
+.workspace-body .tool-pill,
+.workspace-body .formula-pill,
+.workspace-body .link-pill,
+.workspace-body .workspace-actions .button,
+.workspace-body .editor-toolbar .button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid #c9d7ea;
+    border-radius: 4px;
+    background: #ffffff;
+    box-shadow: none;
+    color: #16365d;
+}
+
+.workspace-body .workspace-actions .button.button-primary,
+.workspace-body .tool-pill.is-active,
+.workspace-body .formula-pill:hover,
+.workspace-body .link-pill:hover,
+.workspace-body .editor-toolbar .button:hover {
+    border-color: #8fb4e8;
+    background: #edf4ff;
+    color: #0f4ea6;
+}
+
+.workspace-body .editor-toolbar {
+    gap: 0.55rem;
+    padding: 0.6rem 0.75rem;
+    border-bottom: 1px solid #dbe4f0;
+    background: #f8fbff;
+}
+
+.workspace-body .name-box,
+.workspace-body .formula-prefix,
+.workspace-body .formula-bar {
+    min-height: 2.35rem;
+    border-radius: 4px;
+}
+
+.workspace-body .name-box,
+.workspace-body .formula-prefix {
+    border-color: #cad8ea;
+    background: #ffffff;
+    color: #17324d;
+}
+
+.workspace-body .formula-bar {
+    border: 1px solid #cad8ea;
+    background: #ffffff;
+    color: #17324d;
+}
+
+.workspace-body .formula-bar::placeholder {
+    color: #8094ad;
+}
+
+.workspace-body .editor-info-line {
+    gap: 0.5rem 1rem;
+    padding: 0.5rem 0.75rem;
+    border-bottom: 1px solid #e0e8f3;
+    background: #ffffff;
+    color: #5b708a;
+    font-size: 0.82rem;
+}
+
+.workspace-body .editor-info-line strong {
+    color: #16365d;
+}
+
+.workspace-body .save-state {
+    margin: 0;
+    padding: 0.45rem 0.75rem;
+    border-bottom: 1px solid #e0e8f3;
+    background: #fdfefe;
+}
+
+.workspace-body .sheet-workspace {
+    padding: 0;
+    background: #ffffff;
+}
+
+.workspace-body .sheet-stage {
+    border: 0;
+    border-radius: 0;
+    background: #ffffff;
+    box-shadow: none;
+}
+
+.workspace-body .sheet-panel-head {
+    padding: 0.5rem 0.75rem;
+    border-bottom: 1px solid #dbe4f0;
+    background: #f8fbff;
+}
+
+.workspace-body .sheet-frame {
+    min-height: calc(100vh - 18rem);
+    border: 0;
+    border-radius: 0;
+    background: #ffffff;
+}
+
+.workspace-body .sheet-table {
+    min-width: 100%;
+    border-collapse: collapse;
+}
+
+.workspace-body .sheet-table th,
+.workspace-body .sheet-table td {
+    border-color: #dbe4f0;
+}
+
+.workspace-body .sheet-col-head,
+.workspace-body .sheet-row-head {
+    background: #f4f7fb;
+    color: #4f6480;
+}
+
+.workspace-body .sheet-cell {
+    color: #152f4e;
+}
+
+.workspace-body .sheet-cell.is-highlighted {
+    background: #edf4ff;
+    border-color: #bfd3ef;
+}
+
+.workspace-body .editor-statusbar {
+    margin-top: 0;
+    padding: 0.55rem 0.75rem;
+    border-top: 1px solid #dbe4f0;
+    background: #f8fbff;
+}
+
+.workspace-body .sheet-tab {
+    border-radius: 4px;
+}
+
+@media (max-width: 900px) {
+    .workspace-body .ribbon-panel.is-active {
+        grid-template-columns: 1fr;
+    }
+
+    .workspace-body .workspace-header.workspace-app-header {
+        width: calc(100% - 0.5rem);
+        padding: 0.6rem;
+    }
+
+    .workspace-body .editor-ribbon,
+    .workspace-body .editor-toolbar,
+    .workspace-body .editor-info-line,
+    .workspace-body .sheet-panel-head,
+    .workspace-body .editor-statusbar {
+        padding-left: 0.6rem;
+        padding-right: 0.6rem;
+    }
+
+    .workspace-body .sheet-frame {
+        min-height: calc(100vh - 15rem);
+    }
+}
