@@ -733,6 +733,62 @@ textarea {
     border-top: 1px solid var(--line);
 }
 
+.workspace-guide {
+    display: grid;
+    grid-template-columns: 1.05fr 1.15fr auto;
+    gap: 1rem;
+    align-items: start;
+    margin-bottom: 1rem;
+    padding: 1.15rem 1.2rem;
+    border: 1px solid rgba(120, 255, 214, 0.22);
+    border-radius: 24px;
+    background:
+        radial-gradient(circle at top left, rgba(120, 255, 214, 0.12), transparent 26%),
+        linear-gradient(180deg, rgba(255, 255, 255, 0.04), rgba(255, 255, 255, 0.02));
+}
+
+.workspace-guide h2 {
+    margin: 0 0 0.7rem;
+    font-size: clamp(1.35rem, 2.2vw, 2rem);
+    line-height: 1.1;
+    letter-spacing: -0.04em;
+}
+
+.workspace-guide p {
+    margin: 0;
+    color: var(--muted);
+    line-height: 1.65;
+}
+
+.workspace-guide .eyebrow {
+    margin-bottom: 0.55rem;
+}
+
+.workspace-guide-steps {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.8rem;
+}
+
+.workspace-guide-steps article {
+    padding: 0.95rem 1rem;
+    border: 1px solid var(--line);
+    border-radius: 18px;
+    background: rgba(255, 255, 255, 0.03);
+}
+
+.workspace-guide-steps strong {
+    display: block;
+    margin-bottom: 0.35rem;
+    font-size: 0.98rem;
+}
+
+.workspace-guide-actions {
+    display: grid;
+    gap: 0.75rem;
+    min-width: 180px;
+}
+
 .editor-ribbon {
     display: flex;
     align-items: start;
@@ -1141,6 +1197,7 @@ textarea {
         grid-template-columns: 1fr;
     }
 
+    .workspace-guide,
     .editor-ribbon,
     .creative-workbench,
     .stage-meta {
@@ -1190,8 +1247,13 @@ textarea {
 
     .hero-actions,
     .workspace-actions,
-    .app-header-actions {
+    .app-header-actions,
+    .workspace-guide-actions {
         flex-direction: column;
         align-items: stretch;
+    }
+
+    .workspace-guide-steps {
+        grid-template-columns: 1fr;
     }
 }

@@ -52,6 +52,40 @@
         </aside>
 
         <section class="workspace-editor panel-card" data-reveal>
+            {% if workspace_bootstrap.just_created %}
+            <section class="workspace-guide" data-onboarding-panel>
+                <div class="workspace-guide-copy">
+                    <p class="eyebrow">Workspace ready</p>
+                    <h2>Your workspace has been created. Start here.</h2>
+                    <p>
+                        Use these first steps to begin quickly: click a cell, type your data, import a CSV if you already have a sheet,
+                        then export when you are ready to download it.
+                    </p>
+                </div>
+                <div class="workspace-guide-steps">
+                    <article>
+                        <strong>1. Click cell A1</strong>
+                        <p>Start typing directly into the grid or use the formula bar at the top.</p>
+                    </article>
+                    <article>
+                        <strong>2. Import existing data</strong>
+                        <p>Use the <code>Import CSV</code> button if you already have spreadsheet data.</p>
+                    </article>
+                    <article>
+                        <strong>3. Grow the sheet</strong>
+                        <p>Add more rows and columns with the quick controls above the editor.</p>
+                    </article>
+                    <article>
+                        <strong>4. Download anytime</strong>
+                        <p>Use <code>Download CSV</code> whenever you want an exported copy of the workspace.</p>
+                    </article>
+                </div>
+                <div class="workspace-guide-actions">
+                    <button class="button button-primary slim" type="button" data-guide-start>Start Editing</button>
+                    <button class="button button-secondary slim" type="button" data-guide-dismiss>Dismiss Guide</button>
+                </div>
+            </section>
+            {% endif %}
             <div class="editor-ribbon">
                 <div class="editor-mode-group">
                     <button class="tool-pill is-active" type="button" data-tool="select">Select</button>

@@ -208,7 +208,11 @@ def create_app() -> Flask:
             title=f"{workspace['name']} Workspace",
             description=f"Edit and analyze the {workspace['name']} spreadsheet workspace.",
             canonical_url=canonical(f"/workspace/{workspace['slug']}"),
-            workspace_bootstrap={"user": g.current_user, "workspace": workspace},
+            workspace_bootstrap={
+                "user": g.current_user,
+                "workspace": workspace,
+                "just_created": request.args.get("created") == "1",
+            },
         )
 
     @app.post("/api/auth/signup")
@@ -319,7 +323,7 @@ def create_app() -> Flask:
             {
                 "ok": True,
                 "workspace": workspace,
-                "redirect": url_for("workspace_page", slug=workspace["slug"]),
+                "redirect": url_for("workspace_page", slug=workspace["slug"], created=1),
             }
         )
 

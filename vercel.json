@@ -1,10 +1,4 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
-  "framework": "flask",
-  "functions": {
-    "api/app.py": {
-      "maxDuration": 60,
-      "excludeFiles": "{__pycache__/**,.git/**,.venv/**,desktop/**,public/**,rust-wasm/**,scripts/**,wasm/**,local-dev.db,local-dev.db-journal}"
-    }
-  }
+  "framework": "flask"
 }

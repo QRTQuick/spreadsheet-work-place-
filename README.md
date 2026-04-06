@@ -1,131 +1,160 @@
 # электронная таблица
 
-`электронная таблица` is a polished multi-page spreadsheet workspace built with HTML, CSS, JavaScript, Flask, Neon-ready PostgreSQL support, and a small Go WebAssembly helper pipeline. The project is now structured for Vercel hosting with Flask as the backend entrypoint and `public/static` as the CDN-served asset directory.
+`электронная таблица` is a premium online spreadsheet workspace built with Flask, HTML, CSS, JavaScript, Neon/PostgreSQL, and browser-side WebAssembly hooks. It combines a marketing site, authentication flow, private user workspaces, CSV import/export, a visual spreadsheet editor, and Vercel-ready deployment in one codebase.
 
-## What is included
+## Overview
 
-- Premium landing page with strong SEO metadata, structured data, animated sections, and conversion-focused calls to action
-- Multi-page app flow: landing page, login, signup, dashboard, and spreadsheet workspace
-- Private per-user workspaces with session-based authentication
-- CSV import and export for spreadsheet data
-- Flask API routes for auth, workspace creation, autosave, import, and export
-- `/api/health` for deployment and database checks
-- Neon-ready database support via `DATABASE_URL`
-- `robots.txt`, `sitemap.xml`, and a web manifest for search and installability
-- Go WebAssembly source for spreadsheet stats with a JavaScript fallback when the compiled wasm bundle is not present
-- Rust/WASM editor graphics scaffold for richer browser-side rendering
-- Optional PySide6 desktop studio for native UI experiments
-- Vercel-aware production URL detection via `VERCEL_PROJECT_PRODUCTION_URL` and `VERCEL_URL`
+The product is organized as a multi-page web application:
 
-## Project structure
+- marketing landing page for discovery and conversion
+- login and signup pages for account access
+- dashboard for creating and opening private workspaces
+- spreadsheet editor for importing, editing, visualizing, and exporting sheet data
 
-- `app.py`: Flask entrypoint for local use and Vercel deployment
-- `backend/`: app factory, settings, and database layer
-- `public/static/`: CSS, JavaScript, SVG assets, and wasm loader files served directly by Vercel
-- `templates/`: server-rendered HTML pages
-- `sql/schema.sql`: portable schema for SQLite dev or Neon/PostgreSQL production
-- `wasm/main.go`: Go source for the WebAssembly helper
-- `rust-wasm/sheet_graphics/`: Rust WebAssembly crate for editor graphics
-- `desktop/`: optional PySide6 desktop companion
-- `scripts/build_wasm.ps1`: copies `wasm_exec.js` and compiles the Go module
-- `scripts/build_rust_wasm.ps1`: builds the Rust wasm bundle into `public/static/wasm/`
+Each authenticated user gets private workspaces tied to their own account. Workspaces are persisted in the database, and spreadsheet content is stored as serialized grid data with import/export support.
 
-## Local setup
+## Core capabilities
 
-1. Create a virtual environment.
-2. Install dependencies with `pip install -r requirements.txt`.
-3. Copy `.env.example` to `.env` and set a real `SECRET_KEY`.
-4. For local SQLite, set `DATABASE_URL=sqlite:///local-dev.db`.
-5. For Neon, replace `DATABASE_URL` with your Neon connection string.
-6. Run the app with `python app.py`.
+- Private user accounts with session-based authentication
+- User-specific workspaces with unique slugs
+- CSV import and export
+- Browser spreadsheet editor with autosave
+- Visual editor overlays with JavaScript fallback and Rust/Go WASM extension points
+- Neon-ready PostgreSQL support with SQLite fallback for local development
+- Vercel-ready Flask deployment
+- SEO assets including metadata, JSON-LD, `robots.txt`, `sitemap.xml`, and a web manifest
+- Optional PySide6 desktop companion for native UI experiments
 
-The app auto-loads `.env` with `python-dotenv`.
+## Documentation map
 
-## Vercel deployment
+- [Architecture](docs/architecture.md)
+- [API Reference](docs/api.md)
+- [Deployment Guide](docs/deployment.md)
+- [Editor And Runtimes](docs/editor-and-runtimes.md)
 
-1. Push the repository to GitHub.
-2. Import the repo into Vercel.
-3. Add these environment variables in the Vercel dashboard:
-   - `DATABASE_URL`
-   - `SECRET_KEY`
-   - `SITE_URL`
-   - `SECURE_COOKIES=1`
-4. Optionally enable automatically exposed system environment variables in Vercel so the app can detect production and preview URLs.
-5. Deploy.
+## Repository structure
 
-Recommended production values:
+- `app.py`
+  Flask entrypoint used locally and by Vercel framework detection.
+- `backend/`
+  Application factory, configuration loading, and database access layer.
+- `templates/`
+  Server-rendered pages for landing, auth, dashboard, and workspace UI.
+- `public/static/`
+  CSS, JavaScript, images, and wasm runtime assets served by Vercel's static layer.
+- `sql/schema.sql`
+  Database schema for users, workspaces, sheets, and activity events.
+- `wasm/main.go`
+  Go-based WebAssembly source for spreadsheet statistics.
+- `rust-wasm/sheet_graphics/`
+  Rust WebAssembly crate for spreadsheet visual model generation.
+- `desktop/`
+  Optional PySide6 desktop studio for native UI exploration.
+- `scripts/`
+  Build helpers for Go and Rust wasm outputs.
 
-- `SITE_URL=https://your-production-domain.com`
-- `DATABASE_URL=postgresql://...` using the Neon pooled connection string
+## Quick start
 
-The Flask app is Vercel-aware:
+### 1. Create the environment
 
-- it reads `VERCEL_PROJECT_PRODUCTION_URL` for stable canonical URLs and OG image links
-- it falls back to `VERCEL_URL` for preview deployments
-- it enables secure cookies automatically on Vercel unless you override `SECURE_COOKIES`
-- it serves frontend assets from `public/static`, which Vercel can cache and deliver directly
+Copy the example file and set your own secrets:
 
-## Neon notes
+```powershell
+Copy-Item .env.example .env
+```
 
-The backend uses `psycopg` and works with Neon PostgreSQL connection strings. The schema is initialized automatically when the app starts, so the required tables are created on first boot.
+Important environment values:
 
-If a live Neon connection string was pasted into chat or shared publicly, rotate it in Neon before going live.
+- `SECRET_KEY`
+  Required for Flask sessions. Use a long random value in every non-dev environment.
+- `DATABASE_URL`
+  Use Neon/PostgreSQL in production. You can use `sqlite:///local-dev.db` locally.
+- `SITE_URL`
+  Your public domain. Used for canonical URLs, OG tags, and sitemap generation.
+- `SECURE_COOKIES`
+  Set to `1` behind HTTPS.
 
-## Health checks
+### 2. Install Python dependencies
 
-Use this endpoint after deployment:
+```powershell
+pip install -r requirements.txt
+```
+
+### 3. Run the app locally
+
+```powershell
+python app.py
+```
+
+Open `http://127.0.0.1:5000`.
+
+## Local development modes
+
+### SQLite mode
+
+Use this for quick local development:
+
+```env
+DATABASE_URL=sqlite:///local-dev.db
+```
+
+### Neon mode
+
+Use this to match production more closely:
+
+```env
+DATABASE_URL=postgresql://username:password@your-neon-host.neon.tech/your_database?sslmode=require
+```
+
+## Deployment summary
+
+The site is structured for Vercel Flask deployment:
+
+- the Flask app is exported from root `app.py`
+- static assets are stored in `public/static/`
+- deployment settings are defined with the Flask framework in `vercel.json`
+- production URLs can be inferred from Vercel system environment variables
+
+For the full process, see [docs/deployment.md](docs/deployment.md).
+
+## Health endpoint
+
+The application exposes:
 
 ```text
 /api/health
 ```
 
-It returns the deployment environment, detected site URL, and whether the database is currently reachable.
+This returns database readiness, detected environment, Vercel status, and the active site URL.
 
-## Rust / WebAssembly graphics
+## WebAssembly and desktop extras
 
-The browser editor now prefers a Rust/WASM graphics engine for spreadsheet overlays and falls back to JavaScript when the Rust bundle is not present.
+The project currently supports three extension paths around the main editor:
 
-Build requirements:
+- JavaScript fallback rendering in the browser
+- Go WebAssembly for spreadsheet statistics
+- Rust WebAssembly for browser-side visual models
 
-- `wasm-pack`
-- the `wasm32-unknown-unknown` Rust target
+There is also a separate PySide6 desktop studio for native UI experimentation. This desktop app is not part of the Vercel deployment.
 
-Build command:
+See [docs/editor-and-runtimes.md](docs/editor-and-runtimes.md) for details.
 
-```powershell
-.\scripts\build_rust_wasm.ps1
-```
+## Security notes
 
-## Go / WebAssembly
+- Never commit a real `SECRET_KEY`
+- Never commit a live production `DATABASE_URL`
+- Rotate any credentials that were ever pasted into public or semi-public channels
+- Keep `SECURE_COOKIES=1` in production
 
-Go is not installed in this workspace right now, so the browser will use the JavaScript fallback until you compile the wasm helper.
+## Current status
 
-After installing Go, run:
+This repository already includes:
 
-```powershell
-.\scripts\build_wasm.ps1
-```
+- a polished landing page
+- private authentication and workspace flows
+- a working dashboard and spreadsheet editor
+- database-backed persistence
+- deployment scaffolding for Vercel
+- deeper runtime scaffolds for Go, Rust, and PySide6
 
-That script will:
-
-- copy `wasm_exec.js` into `public/static/wasm/`
-- compile `wasm/main.go` into `public/static/wasm/sheet_tools.wasm`
-
-## PySide6 desktop studio
-
-PySide6 does not run on Vercel or in the browser, so it is included as a separate native desktop companion.
-
-Run it locally:
-
-```powershell
-pip install -r desktop/requirements.txt
-python desktop/editor_studio.py
-```
-
-## Production notes
-
-- Set `SECURE_COOKIES=1` behind HTTPS
-- Use a strong `SECRET_KEY`
-- Point `SITE_URL` to your public domain so sitemap and canonicals are correct
-- Replace SQLite with Neon/PostgreSQL in production
-- Keep frontend assets inside `public/static` for Vercel
+The project is a solid production-oriented base, with clear extension points for richer spreadsheet logic, collaboration features, formula engines, permissions, and advanced import/export support.

@@ -25,6 +25,9 @@ if (workspaceNode) {
     const zoomValueNode = document.querySelector("[data-zoom-value]");
     const toolButtons = [...document.querySelectorAll("[data-tool]")];
     const swatchButtons = [...document.querySelectorAll("[data-swatch]")];
+    const onboardingPanel = document.querySelector("[data-onboarding-panel]");
+    const onboardingDismissButton = document.querySelector("[data-guide-dismiss]");
+    const onboardingStartButton = document.querySelector("[data-guide-start]");
 
     const minRows = 18;
     const minCols = 8;
@@ -159,6 +162,21 @@ if (workspaceNode) {
     function focusCell(row, col) {
         const input = sheetGrid.querySelector(`[data-row="${row}"][data-col="${col}"]`);
         input?.focus();
+    }
+
+    function dismissOnboarding(shouldFocus = false) {
+        if (!onboardingPanel) {
+            return;
+        }
+
+        onboardingPanel.remove();
+        const url = new URL(window.location.href);
+        url.searchParams.delete("created");
+        window.history.replaceState({}, "", url);
+
+        if (shouldFocus) {
+            window.setTimeout(() => focusCell(0, 0), 30);
+        }
     }
 
     function updateCellHighlights() {
@@ -475,6 +493,14 @@ if (workspaceNode) {
 
     zoomSlider?.addEventListener("input", (event) => {
         setZoom(Number(event.target.value));
+    });
+
+    onboardingDismissButton?.addEventListener("click", () => {
+        dismissOnboarding(false);
+    });
+
+    onboardingStartButton?.addEventListener("click", () => {
+        dismissOnboarding(true);
     });
 
     sheetFrame?.addEventListener("scroll", requestGraphicsRender);
