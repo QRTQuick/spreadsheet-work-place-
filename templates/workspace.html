@@ -12,15 +12,14 @@
                 </span>
             </a>
             <div class="workspace-titlebar">
-                <span class="mini-pill">Private workbook</span>
                 <strong>{{ workspace_bootstrap.workspace.name }}</strong>
-                <small>{{ workspace_bootstrap.workspace.description or "Focused spreadsheet workspace" }}</small>
+                <small>{{ workspace_bootstrap.workspace.description or "Private spreadsheet workspace" }}</small>
             </div>
         </div>
         <div class="workspace-actions">
             <label class="button button-secondary file-button">
-                Import CSV
-                <input type="file" accept=".csv,text/csv" data-import-input hidden>
+                Import CSV/XLSX
+                <input type="file" accept=".csv,.xlsx,.xlsm,.xltx,.xltm,text/csv,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,application/vnd.ms-excel.sheet.macroEnabled.12" data-import-input hidden>
             </label>
             <a class="button button-secondary" href="{{ url_for('export_sheet_api', workspace_id=workspace_bootstrap.workspace.id) }}">Download CSV</a>
             <a class="button button-primary" href="{{ url_for('dashboard_page') }}">Back to Dashboard</a>
@@ -32,22 +31,8 @@
         <section class="workspace-guide" data-onboarding-panel>
             <div class="workspace-guide-copy">
                 <p class="eyebrow">Workspace ready</p>
-                <h2>{{ workspace_bootstrap.workspace.name }} is ready to edit.</h2>
-                <p>Start in <code>A1</code>, use the formula bar for quick edits, and import a CSV any time you want to bring in an existing sheet.</p>
-            </div>
-            <div class="workspace-guide-steps">
-                <article>
-                    <strong>Click and type</strong>
-                    <p>Choose any cell and begin entering your sheet data right away.</p>
-                </article>
-                <article>
-                    <strong>Import fast</strong>
-                    <p>Use <code>Import CSV</code> to fill the grid from an existing spreadsheet.</p>
-                </article>
-                <article>
-                    <strong>Export anytime</strong>
-                    <p>Use <code>Download CSV</code> whenever you need a fresh copy.</p>
-                </article>
+                <h2>{{ workspace_bootstrap.workspace.name }} is ready.</h2>
+                <p>Click a cell or use the formula bar to begin. You can import a CSV or Excel file now, or start with a blank sheet.</p>
             </div>
             <div class="workspace-guide-actions">
                 <button class="button button-primary slim" type="button" data-guide-start>Start Editing</button>
@@ -58,13 +43,14 @@
 
         <div class="studio-heading">
             <div>
-                <p class="eyebrow">Single-page spreadsheet editor</p>
+                <p class="eyebrow">Workbook</p>
                 <h1>{{ workspace_bootstrap.workspace.name }}</h1>
+                <p class="workspace-subtitle">{{ workspace_bootstrap.workspace.description or "A private spreadsheet workspace for this account." }}</p>
             </div>
             <div class="studio-heading-pills">
+                <span class="mini-pill">Private</span>
                 <span class="mini-pill">Autosave</span>
-                <span class="mini-pill">CSV import/export</span>
-                <span class="mini-pill">Only visible to you</span>
+                <span class="mini-pill" data-engine-mode>Loading browser sheet tools…</span>
             </div>
         </div>
 
@@ -78,12 +64,12 @@
 
         <div class="editor-ribbon spreadsheet-ribbon">
             <div class="ribbon-group">
-                <span class="ribbon-label">Tools</span>
+                <span class="ribbon-label">Edit</span>
                 <div class="editor-mode-group">
                     <button class="tool-pill is-active" type="button" data-tool="select">Select</button>
                     <button class="tool-pill" type="button" data-tool="draw">Fill</button>
                     <button class="tool-pill" type="button" data-tool="focus">Focus</button>
-                    <button class="tool-pill" type="button" data-tool="comment">Comment</button>
+                    <button class="tool-pill" type="button" data-tool="comment">Note</button>
                 </div>
             </div>
             <div class="ribbon-group">
@@ -92,7 +78,7 @@
                     <label class="editor-control">
                         <span>Visual mode</span>
                         <select data-visual-mode>
-                            <option value="neon">Gold Ledger</option>
+                            <option value="neon">Standard</option>
                             <option value="heatmap">Heatmap</option>
                             <option value="focus">Focus Grid</option>
                         </select>
@@ -103,72 +89,63 @@
                     </label>
                 </div>
             </div>
-            <div class="ribbon-group ribbon-group-swatch">
-                <span class="ribbon-label">Accent</span>
-                <div class="stage-swatches">
-                    <button class="swatch-chip is-active" type="button" data-swatch="#d4af37" style="--swatch:#d4af37"></button>
-                    <button class="swatch-chip" type="button" data-swatch="#f0cf72" style="--swatch:#f0cf72"></button>
-                    <button class="swatch-chip" type="button" data-swatch="#b8860b" style="--swatch:#b8860b"></button>
-                    <button class="swatch-chip" type="button" data-swatch="#8d6b2f" style="--swatch:#8d6b2f"></button>
+            <div class="ribbon-group ribbon-group-metrics">
+                <span class="ribbon-label">Workbook</span>
+                <div class="studio-status-grid">
+                    <article class="status-tile">
+                        <span>Filled cells</span>
+                        <strong data-sheet-filled>0</strong>
+                    </article>
+                    <article class="status-tile">
+                        <span>Numeric cells</span>
+                        <strong data-sheet-numeric>0</strong>
+                    </article>
+                    <article class="status-tile">
+                        <span>Numeric sum</span>
+                        <strong data-sheet-sum>0</strong>
+                    </article>
+                    <article class="status-tile">
+                        <span>Renderer</span>
+                        <strong data-renderer-kind>Loading</strong>
+                    </article>
                 </div>
             </div>
         </div>
 
         <div class="editor-toolbar spreadsheet-toolbar">
             <label class="name-box" for="formula-bar" data-active-cell>A1</label>
+            <span class="formula-prefix" aria-hidden="true">fx</span>
             <input id="formula-bar" class="formula-bar" type="text" placeholder="Type a value or formula-like text">
             <button class="button button-secondary slim" type="button" data-add-row>Add row</button>
             <button class="button button-secondary slim" type="button" data-add-column>Add column</button>
         </div>
 
-        <div class="studio-status-grid">
-            <article class="status-tile">
-                <span>Filled cells</span>
-                <strong data-sheet-filled>0</strong>
+        <div class="editor-summary-bar">
+            <article class="summary-chip">
+                <span>Tool</span>
+                <strong data-tool-label>Selection tool active</strong>
             </article>
-            <article class="status-tile">
-                <span>Numeric cells</span>
-                <strong data-sheet-numeric>0</strong>
+            <article class="summary-chip">
+                <span>Active cell</span>
+                <strong data-active-summary>A1</strong>
             </article>
-            <article class="status-tile">
-                <span>Numeric sum</span>
-                <strong data-sheet-sum>0</strong>
+            <article class="summary-chip summary-chip-wide">
+                <span>Cell value</span>
+                <p data-active-value>Empty cell</p>
             </article>
-            <article class="status-tile status-tile-wide">
-                <span>Engine</span>
-                <strong data-engine-mode>Loading browser sheet tools…</strong>
+            <article class="summary-chip summary-chip-wide">
+                <span>View</span>
+                <p data-visual-mode-label>Standard grid with subtle highlights.</p>
             </article>
         </div>
 
         <p class="save-state" data-save-state>Autosave starts after your first edit.</p>
 
         <div class="sheet-workspace">
-            <aside class="tool-rail" aria-label="Editor tools">
-                <button class="rail-button is-active" type="button" data-tool="select" title="Select">Sel</button>
-                <button class="rail-button" type="button" data-tool="draw" title="Fill">Fill</button>
-                <button class="rail-button" type="button" data-tool="focus" title="Focus">Focus</button>
-                <button class="rail-button" type="button" data-tool="comment" title="Comment">Note</button>
-            </aside>
             <section class="sheet-stage">
-                <div class="stage-meta spreadsheet-stage-meta">
-                    <div>
-                        <p class="eyebrow">Workbook grid</p>
-                        <strong data-tool-label>Selection tool active</strong>
-                    </div>
-                    <div class="stage-meta-inline">
-                        <div class="stage-inline-block">
-                            <span class="stage-kicker">Active</span>
-                            <strong data-active-summary>A1</strong>
-                        </div>
-                        <div class="stage-inline-block stage-inline-wide">
-                            <span class="stage-kicker">Cell value</span>
-                            <p data-active-value>Empty cell</p>
-                        </div>
-                        <div class="stage-inline-block">
-                            <span class="stage-kicker">Renderer</span>
-                            <strong data-renderer-kind>Loading</strong>
-                        </div>
-                    </div>
+                <div class="sheet-panel-head">
+                    <strong>Sheet 1</strong>
+                    <span>Use <code>Tab</code> to move right and <code>Enter</code> to move down.</span>
                 </div>
                 <div class="sheet-frame" data-sheet-frame>
                     <canvas class="sheet-canvas" data-sheet-canvas></canvas>
@@ -178,13 +155,12 @@
         </div>
 
         <footer class="editor-statusbar">
-            <div class="statusbar-item">
-                <strong>View</strong>
-                <span data-visual-mode-label>Gold Ledger mode with warm sheet overlays.</span>
+            <div class="sheet-tab-bar">
+                <button class="sheet-tab is-active" type="button">Sheet1</button>
             </div>
             <div class="statusbar-item">
-                <strong>Tip</strong>
-                <span>Use <code>Tab</code> to move right and <code>Enter</code> to move down.</span>
+                <strong>Status</strong>
+                <span>Editing is private to this workspace.</span>
             </div>
         </footer>
     </section>

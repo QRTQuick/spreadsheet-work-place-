@@ -41,7 +41,7 @@ function fallbackVisualModel(cells, active, visualMode) {
 }
 
 const fallbackSheetTools = {
-    mode: "JavaScript Canvas Fallback",
+    mode: "JavaScript Fallback",
     computeStats: fallbackStats,
     buildVisualModel: fallbackVisualModel,
 };
@@ -93,7 +93,7 @@ async function initGoSheetTools() {
         }
 
         return {
-            mode: "Go WebAssembly + JS Graphics",
+            mode: "Go WebAssembly",
             computeStats(cells) {
                 return JSON.parse(window.sheetToolStats(JSON.stringify(cells)));
             },

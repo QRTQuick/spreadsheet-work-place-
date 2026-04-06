@@ -1,6 +1,6 @@
 # электронная таблица
 
-`электронная таблица` is a premium online spreadsheet workspace built with Flask, HTML, CSS, JavaScript, Neon/PostgreSQL, and browser-side WebAssembly hooks. It combines a marketing site, authentication flow, private user workspaces, CSV import/export, a visual spreadsheet editor, and Vercel-ready deployment in one codebase.
+`электронная таблица` is a premium online spreadsheet workspace built with Flask, HTML, CSS, JavaScript, Neon/PostgreSQL, and browser-side WebAssembly hooks. It combines a marketing site, authentication flow, private user workspaces, CSV and Excel import, CSV export, a visual spreadsheet editor, and Vercel-ready deployment in one codebase.
 
 ## Overview
 
@@ -17,7 +17,8 @@ Each authenticated user gets private workspaces tied to their own account. Works
 
 - Private user accounts with session-based authentication
 - User-specific workspaces with unique slugs
-- CSV import and export
+- CSV and Excel (`.xlsx`) import
+- CSV export
 - Browser spreadsheet editor with autosave
 - Visual editor overlays with JavaScript fallback and Rust/Go WASM extension points
 - Neon-ready PostgreSQL support with SQLite fallback for local development

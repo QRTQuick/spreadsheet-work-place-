@@ -359,9 +359,20 @@ def create_app() -> Flask:
     def import_sheet_api(workspace_id: str):
         upload = request.files.get("sheet")
         if upload is None or not upload.filename:
-            return jsonify({"ok": False, "error": "Please choose a CSV file to import."}), 400
+            return jsonify({"ok": False, "error": "Please choose a CSV or Excel (.xlsx) file to import."}), 400
 
-        workspace = database.import_csv(g.current_user["id"], workspace_id, upload.read())
+        try:
+            workspace = database.import_sheet(
+                g.current_user["id"],
+                workspace_id,
+                upload.filename,
+                upload.read(),
+            )
+        except ValueError as exc:
+            return jsonify({"ok": False, "error": str(exc)}), 400
+        except RuntimeError as exc:
+            return jsonify({"ok": False, "error": str(exc)}), 500
+
         if workspace is None:
             return jsonify({"ok": False, "error": "Workspace not found."}), 404
 
@@ -410,8 +421,8 @@ def create_app() -> Flask:
             "short_name": "электронная таблица",
             "start_url": "/",
             "display": "standalone",
-            "background_color": "#0b1020",
-            "theme_color": "#78ffd6",
+            "background_color": "#efe3c7",
+            "theme_color": "#7a5b36",
             "icons": [
                 {
                     "src": asset_url("img/logo-mark.svg"),

@@ -38,7 +38,7 @@ if (workspaceNode) {
         comment: "Comment tool active",
     };
     const visualModeDescriptions = {
-        neon: "Gold Ledger mode with warm sheet overlays.",
+        neon: "Standard grid with subtle highlights.",
         heatmap: "Heatmap mode highlights numeric intensity.",
         focus: "Focus Grid mode isolates your active row and column.",
     };
@@ -52,7 +52,7 @@ if (workspaceNode) {
         tool: "select",
         visualMode: "neon",
         zoom: 100,
-        swatch: "#d4af37",
+        swatch: "#185abd",
         renderQueued: false,
     };
 
@@ -371,9 +371,9 @@ if (workspaceNode) {
         ctx.clearRect(0, 0, rect.width, rect.height);
 
         const gradient = ctx.createLinearGradient(0, 0, rect.width, rect.height);
-        gradient.addColorStop(0, "rgba(212, 175, 55, 0.10)");
-        gradient.addColorStop(0.5, "rgba(240, 207, 114, 0.06)");
-        gradient.addColorStop(1, "rgba(141, 107, 47, 0.16)");
+        gradient.addColorStop(0, "rgba(24, 90, 189, 0.08)");
+        gradient.addColorStop(0.5, "rgba(79, 141, 216, 0.05)");
+        gradient.addColorStop(1, "rgba(207, 225, 248, 0.18)");
         ctx.fillStyle = gradient;
         ctx.fillRect(0, 0, rect.width, rect.height);
 
@@ -393,12 +393,12 @@ if (workspaceNode) {
             }
 
             const alpha = 0.10 + cell.intensity * 0.28;
-            let fill = `rgba(212, 175, 55, ${alpha})`;
+            let fill = `rgba(24, 90, 189, ${alpha})`;
             if (state.visualMode === "heatmap") {
-                fill = `rgba(184, 134, 11, ${0.08 + cell.intensity * 0.34})`;
+                fill = `rgba(46, 122, 219, ${0.08 + cell.intensity * 0.34})`;
             }
             if (state.visualMode === "focus") {
-                fill = `rgba(240, 207, 114, ${0.06 + cell.intensity * 0.26})`;
+                fill = `rgba(120, 171, 235, ${0.06 + cell.intensity * 0.26})`;
             }
 
             roundedRect(ctx, x, y, width, height, 12);
@@ -424,7 +424,7 @@ if (workspaceNode) {
             ctx.restore();
 
             if (state.visualMode === "focus") {
-                ctx.fillStyle = "rgba(212, 175, 55, 0.07)";
+                ctx.fillStyle = "rgba(24, 90, 189, 0.07)";
                 ctx.fillRect(0, y, rect.width, height);
                 ctx.fillRect(x, 0, width, rect.height);
             }
@@ -508,7 +508,7 @@ if (workspaceNode) {
 
     window.initSheetTools?.().then((engine) => {
         state.engine = engine;
-        engineModeNode.textContent = `${engine.mode} ready`;
+        engineModeNode.textContent = engine.mode;
         rendererKindNode.textContent = engine.mode;
         refreshStats();
         updateInspector();

@@ -16,7 +16,6 @@
     <nav class="site-nav" data-nav-menu>
         <a href="#features">Features</a>
         <a href="#workflow">Workflow</a>
-        <a href="#seo">SEO</a>
         <a class="ghost-link" href="{{ url_for('login_page') }}">Log in</a>
         <a class="button button-primary" href="{{ url_for('signup_page') }}">Start Free</a>
     </nav>
@@ -106,7 +105,7 @@
         <article class="feature-card" data-reveal>
             <span class="feature-index">03</span>
             <h2>Full-stack production structure</h2>
-            <p>Flask, Neon-ready database wiring, SEO pages, a web manifest, and a Go WebAssembly helper pipeline are already scaffolded.</p>
+            <p>Flask, Neon-ready database wiring, production templates, and a Go WebAssembly helper pipeline are already scaffolded.</p>
         </article>
     </section>
 
@@ -139,35 +138,6 @@
         </div>
     </section>
 
-    <section class="spotlight-section" id="seo">
-        <div class="spotlight-copy" data-reveal>
-            <p class="eyebrow">Discoverability</p>
-            <h2>SEO foundations are included from day one.</h2>
-            <p>
-                Canonical links, Open Graph tags, JSON-LD structured data, a sitemap, <code>robots.txt</code>, and strong metadata are built in so
-                search engines can understand the product before you start content expansion.
-            </p>
-        </div>
-        <div class="spotlight-panel" data-reveal>
-            <div class="spotlight-line">
-                <span>Landing page metadata</span>
-                <strong>Ready</strong>
-            </div>
-            <div class="spotlight-line">
-                <span>Structured data</span>
-                <strong>SoftwareApplication</strong>
-            </div>
-            <div class="spotlight-line">
-                <span>Sitemap and robots</span>
-                <strong>Included</strong>
-            </div>
-            <div class="spotlight-line">
-                <span>App installability</span>
-                <strong>Manifest added</strong>
-            </div>
-        </div>
-    </section>
-
     <section class="cta-panel" data-reveal>
         <div>
             <p class="eyebrow">Ready to launch</p>
@@ -186,7 +156,6 @@
         <a href="{{ url_for('landing_page') }}">Home</a>
         <a href="{{ url_for('signup_page') }}">Signup</a>
         <a href="{{ url_for('login_page') }}">Login</a>
-        <a href="{{ url_for('sitemap') }}">Sitemap</a>
     </div>
 </footer>
 {% endblock %}

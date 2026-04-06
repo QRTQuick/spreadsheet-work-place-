@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import csv
+import datetime as dt
 import io
 import json
 import re
@@ -16,6 +17,11 @@ try:
 except ModuleNotFoundError:  # pragma: no cover
     psycopg = None
     dict_row = None
+
+try:
+    from openpyxl import load_workbook
+except ModuleNotFoundError:  # pragma: no cover
+    load_workbook = None
 
 ROOT_DIR = Path(__file__).resolve().parent.parent
 SCHEMA_FILE = ROOT_DIR / "sql" / "schema.sql"
@@ -56,6 +62,16 @@ def normalize_cells(
         normalized.append([""] * width)
 
     return normalized
+
+
+def spreadsheet_value(value: Any) -> Any:
+    if value is None:
+        return ""
+    if isinstance(value, bool):
+        return "TRUE" if value else "FALSE"
+    if isinstance(value, (dt.datetime, dt.date, dt.time)):
+        return value.isoformat()
+    return value
 
 
 class Database:
@@ -440,6 +456,47 @@ class Database:
             activity_action="sheet.imported",
             activity_detail="Imported spreadsheet data from CSV.",
         )
+
+    def import_xlsx(self, user_id: str, workspace_id: str, payload: bytes) -> dict[str, Any] | None:
+        if load_workbook is None:
+            raise RuntimeError("Excel import is not available on the server right now.")
+
+        workbook = load_workbook(io.BytesIO(payload), data_only=False, read_only=True)
+        try:
+            worksheet = workbook.worksheets[0] if workbook.worksheets else None
+            if worksheet is None:
+                cells: list[list[Any]] = []
+            else:
+                cells = [
+                    [spreadsheet_value(cell) for cell in row]
+                    for row in worksheet.iter_rows(values_only=True)
+                ]
+        finally:
+            workbook.close()
+
+        return self.save_sheet(
+            user_id,
+            workspace_id,
+            cells,
+            activity_action="sheet.imported",
+            activity_detail="Imported spreadsheet data from Excel (.xlsx).",
+        )
+
+    def import_sheet(
+        self,
+        user_id: str,
+        workspace_id: str,
+        filename: str,
+        payload: bytes,
+    ) -> dict[str, Any] | None:
+        suffix = Path(filename).suffix.lower()
+
+        if suffix == ".csv":
+            return self.import_csv(user_id, workspace_id, payload)
+        if suffix in {".xlsx", ".xlsm", ".xltx", ".xltm"}:
+            return self.import_xlsx(user_id, workspace_id, payload)
+
+        raise ValueError("Please choose a CSV or Excel (.xlsx) file to import.")
 
     def export_csv(self, user_id: str, workspace_id: str) -> tuple[str, str] | tuple[None, None]:
         workspace = self.get_workspace(user_id, workspace_id)
