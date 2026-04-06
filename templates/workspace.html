@@ -47,11 +47,11 @@
                 <h1>{{ workspace_bootstrap.workspace.name }}</h1>
                 <p class="workspace-subtitle">{{ workspace_bootstrap.workspace.description or "A private spreadsheet workspace for this account." }}</p>
             </div>
-            <div class="studio-heading-pills">
-                <span class="mini-pill">Private</span>
-                <span class="mini-pill">Autosave</span>
-                <span class="mini-pill" data-engine-mode>Loading browser sheet tools…</span>
-            </div>
+            <p class="workspace-meta-line">
+                <span>Private workspace</span>
+                <span>Autosave on</span>
+                <span data-engine-mode>Loading browser sheet tools…</span>
+            </p>
         </div>
 
         <nav class="ribbon-tabs" aria-label="Spreadsheet ribbon">
@@ -89,27 +89,6 @@
                     </label>
                 </div>
             </div>
-            <div class="ribbon-group ribbon-group-metrics">
-                <span class="ribbon-label">Workbook</span>
-                <div class="studio-status-grid">
-                    <article class="status-tile">
-                        <span>Filled cells</span>
-                        <strong data-sheet-filled>0</strong>
-                    </article>
-                    <article class="status-tile">
-                        <span>Numeric cells</span>
-                        <strong data-sheet-numeric>0</strong>
-                    </article>
-                    <article class="status-tile">
-                        <span>Numeric sum</span>
-                        <strong data-sheet-sum>0</strong>
-                    </article>
-                    <article class="status-tile">
-                        <span>Renderer</span>
-                        <strong data-renderer-kind>Loading</strong>
-                    </article>
-                </div>
-            </div>
         </div>
 
         <div class="editor-toolbar spreadsheet-toolbar">
@@ -120,23 +99,15 @@
             <button class="button button-secondary slim" type="button" data-add-column>Add column</button>
         </div>
 
-        <div class="editor-summary-bar">
-            <article class="summary-chip">
-                <span>Tool</span>
-                <strong data-tool-label>Selection tool active</strong>
-            </article>
-            <article class="summary-chip">
-                <span>Active cell</span>
-                <strong data-active-summary>A1</strong>
-            </article>
-            <article class="summary-chip summary-chip-wide">
-                <span>Cell value</span>
-                <p data-active-value>Empty cell</p>
-            </article>
-            <article class="summary-chip summary-chip-wide">
-                <span>View</span>
-                <p data-visual-mode-label>Standard grid with subtle highlights.</p>
-            </article>
+        <div class="editor-info-line">
+            <span><strong data-tool-label>Selection tool active</strong></span>
+            <span><strong data-active-summary>A1</strong></span>
+            <span><strong data-sheet-filled>0</strong> filled</span>
+            <span><strong data-sheet-numeric>0</strong> numeric</span>
+            <span><strong data-sheet-sum>0</strong> sum</span>
+            <span><strong data-renderer-kind>Loading</strong></span>
+            <span data-active-value>Empty cell</span>
+            <span data-visual-mode-label>Standard grid with subtle highlights.</span>
         </div>
 
         <p class="save-state" data-save-state>Autosave starts after your first edit.</p>

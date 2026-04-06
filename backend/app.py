@@ -421,8 +421,8 @@ def create_app() -> Flask:
             "short_name": "электронная таблица",
             "start_url": "/",
             "display": "standalone",
-            "background_color": "#efe3c7",
-            "theme_color": "#7a5b36",
+            "background_color": "#f7faff",
+            "theme_color": "#1a73e8",
             "icons": [
                 {
                     "src": asset_url("img/logo-mark.svg"),
